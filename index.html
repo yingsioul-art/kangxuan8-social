@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>八上社會</title>
+<meta name="theme-color" content="#4f46e5">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+/* 設計基準同英文站（南一八上 v5）：8px 網格｜灰階分層｜Indigo 唯一強調色 */
+:root{
+  --accent:#4f46e5; --accent-ink:#4338ca; --accent-soft:#eef2ff; --accent-line:rgba(79,70,229,.18);
+  --bg:#f7f7f8; --surface:#ffffff; --surface-2:#f4f4f5; --line:#e4e4e7;
+  --ink:#18181b; --ink-2:#52525b; --ink-3:#a1a1aa;
+  --ok:#15803d; --ok-soft:#f0fdf4; --ng:#b91c1c; --ng-soft:#fef2f2; --warn:#a16207; --warn-soft:#fefce8;
+  --r-sm:8px; --r-md:12px; --r-lg:16px;
+  --sh-1:0 1px 2px rgba(24,24,27,.04),0 1px 3px rgba(24,24,27,.06);
+  --sh-2:0 8px 24px rgba(24,24,27,.08),0 2px 6px rgba(24,24,27,.04);
+  --ease:cubic-bezier(.2,.8,.2,1); --pad:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --accent:#818cf8; --accent-ink:#a5b4fc; --accent-soft:rgba(129,140,248,.14); --accent-line:rgba(129,140,248,.28);
+    --bg:#0c0c0e; --surface:#18181b; --surface-2:#232328; --line:#2e2e34;
+    --ink:#f4f4f5; --ink-2:#a1a1aa; --ink-3:#71717a;
+    --ok:#4ade80; --ok-soft:rgba(74,222,128,.10); --ng:#f87171; --ng-soft:rgba(248,113,113,.10); --warn:#facc15; --warn-soft:rgba(250,204,21,.10);
+    --sh-1:0 1px 2px rgba(0,0,0,.4); --sh-2:0 8px 24px rgba(0,0,0,.5); }
+}
+@media (min-width:600px){ :root{ --pad:24px; } }
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;-webkit-font-smoothing:antialiased}
+#app{max-width:720px;margin:0 auto;padding:0 16px 96px}
+header.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;margin:0 -16px 8px;padding:16px;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:saturate(180%) blur(16px);-webkit-backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid color-mix(in srgb,var(--line) 60%,transparent)}
+header.top h1{font-size:20px;font-weight:700;letter-spacing:-.01em;margin:0;flex:1;line-height:1.3}
+header.top .back{width:40px;height:40px;flex:none;border:0;border-radius:50%;background:var(--surface);color:var(--ink);font-size:18px;cursor:pointer;box-shadow:var(--sh-1)}
+header.top .back:active{transform:scale(.92)}
+header.top .home{flex:none;border:0;border-radius:999px;padding:8px 14px;background:var(--surface);color:var(--accent-ink);font:inherit;font-size:14px;font-weight:600;cursor:pointer;box-shadow:var(--sh-1);white-space:nowrap}
+header.top .home:active{transform:scale(.95)}
+h2{font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--ink-3);margin:32px 0 16px}
+h3{font-size:16px;font-weight:600;margin:24px 0 8px}
+p{margin:8px 0 16px}
+.sub{color:var(--ink-2);font-size:14px}
+.muted{color:var(--ink-3);font-size:14px}
+b{font-weight:600}
+.card{background:var(--surface);border-radius:var(--r-lg);padding:var(--pad);margin:16px 0;box-shadow:var(--sh-1)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;border:0;border-radius:var(--r-lg);padding:16px;background:var(--surface);color:var(--ink);box-shadow:var(--sh-1);cursor:pointer;font:inherit;min-height:112px;transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.tile:active{transform:scale(.97)}
+.tile .ic{font-size:24px}
+.tile b{font-size:15px;line-height:1.3}
+.tile small{color:var(--ink-3);font-size:12px;line-height:1.4}
+.tile.done{border:2px solid var(--ok)}
+.btn{display:inline-block;width:100%;margin:8px 0 0;padding:14px 16px;border:0;border-radius:var(--r-md);background:var(--accent);color:#fff;font:inherit;font-weight:600;font-size:16px;cursor:pointer;transition:transform .15s var(--ease)}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.4;cursor:default}
+.btn.ghost{background:var(--surface);color:var(--accent);border:1px solid var(--accent-line)}
+.btn.sm{width:auto;padding:8px 14px;font-size:14px;margin:4px 8px 4px 0}
+.row{display:flex;gap:8px;align-items:center}
+.prog{height:4px;background:var(--line);border-radius:2px;margin:8px 0 16px;overflow:hidden}
+.prog i{display:block;height:100%;background:var(--accent)}
+.steps{display:flex;gap:6px;margin:8px 0 16px;flex-wrap:wrap}
+.steps span{font-size:12px;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
+.steps span.on{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+.steps span.ok{background:var(--ok-soft);color:var(--ok)}
+/* 重點卡 */
+.flash{min-height:260px;display:flex;flex-direction:column;justify-content:center}
+.flash .t{font-size:22px;font-weight:700;margin:0 0 12px;color:var(--accent-ink)}
+.flash .zh{font-size:17px;margin:0 0 16px}
+.flash .why{font-size:14px;color:var(--ink-2);background:var(--warn-soft);border-radius:var(--r-sm);padding:10px 12px}
+.flash .tl{display:flex;flex-wrap:wrap;gap:4px;margin:0 0 10px}
+.flash .tl span{font-size:11px;padding:2px 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-3)}
+.flash .tl span.on{background:var(--accent);color:#fff;font-weight:600}
+.flash .meta{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink-2);margin:0 0 12px;line-height:1.5}
+.flash .ctx{font-size:15px;line-height:1.65;background:var(--surface-2);border-radius:var(--r-sm);padding:10px 12px;margin:0 0 10px}
+.flash .ctx b,.flash .ask b{display:block;font-size:12px;color:var(--ink-3);letter-spacing:.06em;margin-bottom:4px;font-weight:600}
+.flash .ask{margin:0 0 10px;border:1px solid var(--accent-line);border-radius:var(--r-sm);padding:10px 12px;font-size:15px}
+.flash .ask summary{cursor:pointer;font-weight:600;color:var(--accent-ink);list-style:none}
+.flash .ask summary::-webkit-details-marker{display:none}
+.flash .ask summary::after{content:"　點開看提示";font-size:12px;font-weight:400;color:var(--ink-3)}
+.flash .ask[open] summary::after{content:""}
+.flash .ask .hint{margin-top:8px;color:var(--ink-2);line-height:1.6}
+.bigq{background:var(--accent-soft);border-radius:var(--r-md);padding:12px 14px;margin:0 0 16px;font-size:15px;color:var(--accent-ink);line-height:1.6}
+.bigq b{display:block;font-size:12px;letter-spacing:.06em;color:var(--ink-3);margin-bottom:4px}
+.flash .why::before{content:"考什麼：";font-weight:600;color:var(--warn)}
+/* 選項與排序／配對 */
+.opt{display:block;width:100%;text-align:left;margin:8px 0;padding:14px 16px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface);color:var(--ink);font:inherit;font-size:16px;cursor:pointer;line-height:1.5}
+.opt:active{transform:scale(.99)}
+.opt.on{border-color:var(--accent);background:var(--accent-soft)}
+.opt.ok{border-color:var(--ok);background:var(--ok-soft)}
+.opt.ng{border-color:var(--ng);background:var(--ng-soft)}
+.opt:disabled{cursor:default;opacity:.85}
+.chips{display:flex;flex-wrap:wrap;gap:8px;min-height:48px;padding:8px;border:1px dashed var(--line);border-radius:var(--r-md);margin:8px 0}
+.chip{padding:10px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font:inherit;font-size:15px;cursor:pointer;color:var(--ink)}
+.chip.on{border-color:var(--accent);background:var(--accent-soft)}
+.chip.ok{border-color:var(--ok);background:var(--ok-soft)}
+.chip.ng{border-color:var(--ng);background:var(--ng-soft)}
+.chip .n{display:inline-block;min-width:20px;height:20px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px;text-align:center;line-height:20px;margin-right:6px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cols .chip{display:block;width:100%;text-align:left;border-radius:var(--r-md)}
+.pairs .chip{display:block;width:100%;text-align:left;border-radius:var(--r-md);margin:6px 0}
+.verdict{font-size:22px;font-weight:700;margin:16px 0 8px}
+.verdict.ok{color:var(--ok)} .verdict.ng{color:var(--ng)}
+.ex{background:var(--surface-2);border-radius:var(--r-sm);padding:12px;font-size:15px;margin:8px 0}
+.ex .src{display:block;font-size:12px;color:var(--ink-3);margin-top:6px}
+.cardref{border-left:3px solid var(--accent);padding:8px 12px;margin:8px 0;background:var(--accent-soft);border-radius:0 var(--r-sm) var(--r-sm) 0;font-size:15px}
+.cardref b{display:block;color:var(--accent-ink)}
+.big{font-size:40px;font-weight:700;text-align:center;margin:8px 0}
+.list{padding-left:20px;margin:8px 0}
+.list li{margin:6px 0}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+/* 八上社會站首頁：只放方塊，每個方塊是一個獨立頁（hist1.html、hist2.html、socexam.html……）。
+   新課次：在 TILES 加一列，並在 build.py 的 FILES（離線快取）加檔名。 */
+const BUILD = "10/11 18:53";
+const ENGLISH = "https://yingsioul-art.github.io/nanyi8-study/";   // 八上英文站（另一個網站）
+const TILES = [{"h": "歷史", "items": [{"ic": "🏛", "name": "歷史 序章＋L1 國家與社會", "desc": "史前到隋唐的朝代、封建郡縣、選才制度，三天 × 20 分鐘", "href": "hist1.html"}, {"ic": "📜", "name": "歷史 L2 民族與文化", "desc": "民族互動、文化交流，三天 × 20 分鐘：重點卡・排順序・寫題", "href": "hist2.html"}]}, {"h": "段考", "items": [{"ic": "📄", "name": "社會段考原題", "desc": "112～114 學年第一次段考三份考卷，地理・歷史・公民 150 題，附原卷圖表", "href": "socexam.html"}]}];
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tile = (ic,name,desc,href) => `<button class="tile" onclick="location.href='${href}'"><span class="ic">${ic}</span><b>${esc(name)}</b><small>${esc(desc)}</small></button>`;
+document.getElementById("app").innerHTML = `<header class="top"><h1>八上社會</h1></header>
+<p class="sub">康軒第三冊。每個方塊是一個獨立的練習頁，進度存在這支手機裡。</p>
+${TILES.map(sec=>`<h2>${esc(sec.h)}</h2><div class="tiles">${sec.items.map(t=>tile(t.ic,t.name,t.desc,t.href)).join("")}</div>`).join("")}
+<h2>其他</h2><div class="tiles">${tile("🔤","八上英文站","英文在另一個網站",ENGLISH)}</div>
+<p class="sub" style="margin-top:24px">手機可以「加到主畫面」當 app 用，離線也能練。</p>
+<p class="muted" style="font-size:12px">版本 ${BUILD}（如果和老師說的不一樣，重新整理一次）</p>`;
+if ("serviceWorker" in navigator && /^https:|localhost|127\.0\.0\.1/.test(location.href)){
+  navigator.serviceWorker.register("sw.js").then(r=>r.update()).catch(()=>{});
+  let reloaded=false;
+  navigator.serviceWorker.addEventListener("controllerchange", ()=>{ if(!reloaded && navigator.serviceWorker.controller){ reloaded=true; location.reload(); } });
+}
+</script>
+</body>
+</html>
